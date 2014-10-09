@@ -1,0 +1,28 @@
+{
+  "name": "dotbutts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jden/dotbutts.git"
+  },
+  "author": "jden",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/jden/dotbutts/issues"
+  },
+  "bin": "index.js",
+  "homepage": "https://github.com/jden/dotbutts",
+  "dependencies": {
+    "dnsd": "^0.9.5",
+    "zlib": "^1.0.5",
+    "tar-stream": "^1.0.0",
+    "request": "^2.45.0",
+    "concat-stream": "^1.4.6",
+    "memoizee": "^0.3.8"
+  }
+}
