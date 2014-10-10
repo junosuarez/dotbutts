@@ -23,5 +23,8 @@
     "request": "^2.45.0",
     "concat-stream": "^1.4.6",
     "memoizee": "^0.3.8"
+  },
+  "devDependencies": {
+    "mochi": "^0.2.0"
   }
 }

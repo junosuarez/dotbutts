@@ -4,6 +4,7 @@ var dnsd = require('dnsd')
 var dgram = require('dgram')
 var domains = require('./domains')
 var dns = require('dns')
+var getRecord = require('./getRecord')
 
 var proxyServer = '8.8.8.8'
 
