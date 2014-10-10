@@ -19,7 +19,6 @@
   "homepage": "https://github.com/jden/dotbutts",
   "dependencies": {
     "dnsd": "^0.9.5",
-    "zlib": "^1.0.5",
     "tar-stream": "^1.0.0",
     "request": "^2.45.0",
     "concat-stream": "^1.4.6",
