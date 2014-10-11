@@ -23,7 +23,10 @@ function getTarball(repo) {
 
 function _fetchDomains(cb) {
   var first = true
-  var domains = {}
+  // for now this is encoding a (bad?) assumption that
+  // all tlds are .butts        
+  var domains = {butts:{}}
+
   getTarball('jden/registry.butts')
     .on('error', cb)
     .on('entry', function (header, data, next) {
@@ -40,10 +43,15 @@ function _fetchDomains(cb) {
 
       data.pipe(concat(function (buffer) {
         try {
-          var json = parseZone(JSON.parse(buffer))
-          domains[domain] = json
+          var json = parseZone(JSON.parse(buffer.toString()))
+
+          // add to domains tree
+          // for now this is encoding a (bad?) assumption that
+          // all tlds are .butts
+          domains['butts'][domain.substr(0, domain.indexOf('.'))] = json
         } catch (e) {
-          // console.error('could not parse', domain)
+          console.error('could not parse', domain)
+          // console.log(buffer.toString())
         }
         next()
       }))
@@ -62,13 +70,17 @@ var fetchDomains = memoize(_fetchDomains, {
   })
 
 function parseZone(json) {
-  // force all keys to be capitalized
-  Object.keys(json).forEach(function (key) {
-    var upper = key.toUpperCase()
-    if (upper === key) { return }
-    json[upper] = json[key]
-    delete json[key]
-  })
+  // force all record keys to be lower case
+  Object.keys(json)
+    .filter(function (key) {
+      return key[0] === '@'
+    })
+    .forEach(function (key) {
+      var upper = key.toLowerCase()
+      if (upper === key) { return }
+      json[upper] = json[key]
+      delete json[key]
+    })
   return json
 }
 

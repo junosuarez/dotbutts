@@ -41,6 +41,14 @@ describe('getRecord', function () {
       done(err)
     })
   })
+
+  it('returns false if record not found', function (done) {
+    getRecord(records, 'foo.bar', 'a', function (err, records) {
+      records.should.deep.equal([false])
+      done(err)
+    })
+  })
+
 })
 
 describe('getRecord.single', function () {

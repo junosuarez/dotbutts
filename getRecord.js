@@ -19,12 +19,15 @@ function getRecordSingle(records, domain, type, origDomain, cb) {
   }
   origDomain = serializeDomain(origDomain || domain)
   domain = parseDomain(domain)
-  console.log('l', domain)
+  // console.log('l', domain)
 
   // traverse the domain hierarchy one level at a time
   var subdomain = domain.shift()
+  if (!(subdomain in records)) {
+    return cb(null, false)
+  }
   var subrecords = records[subdomain]
-  console.log('x', subdomain, subrecords, domain.length)
+  // console.log('x', subdomain, subrecords, domain.length)
 
   // if there are more levels to go
   if (domain.length) {
