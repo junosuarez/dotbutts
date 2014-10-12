@@ -16,7 +16,7 @@ console.log('set your dns server to localhost to resolve .butts domains')
 
 
 function handler(req, res) {
-  if (!req.question || !endsIn(req.question[0].name, '.butts')) {
+  if (!req.question || !endsIn(req.question[0].name, 'butts')) {
     return proxy(req, res)
   }
   // console.log('intercepted', req.question)

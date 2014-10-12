@@ -4,6 +4,7 @@ var unzip = require('zlib').createUnzip
 var package = require('./package.json')
 var concat = require('concat-stream')
 var memoize = require('memoizee')
+var dot = require('dot-component')
 
 function getTarball(repo) {
   var url = 'https://api.github.com/repos/' + repo + '/tarball/master'
@@ -23,9 +24,7 @@ function getTarball(repo) {
 
 function _fetchDomains(cb) {
   var first = true
-  // for now this is encoding a (bad?) assumption that
-  // all tlds are .butts        
-  var domains = {butts:{}}
+  var zone = {}
 
   getTarball('jden/registry.butts')
     .on('error', cb)
@@ -41,16 +40,13 @@ function _fetchDomains(cb) {
       var domain = filePath.substr('/domains/'.length)
       // console.log('domain:', domain)
 
+      // add domain records to zone tree
       data.pipe(concat(function (buffer) {
         try {
           var json = parseZone(JSON.parse(buffer.toString()))
-
-          // add to domains tree
-          // for now this is encoding a (bad?) assumption that
-          // all tlds are .butts
-          domains['butts'][domain.substr(0, domain.indexOf('.'))] = json
+          dot.set(zone, domain.split('.').reverse().join('.'), json)
         } catch (e) {
-          console.error('could not parse', domain)
+          console.error('could not parse', domain, e)
           // console.log(buffer.toString())
         }
         next()
@@ -59,7 +55,7 @@ function _fetchDomains(cb) {
     })
     .on('finish', function () {
       console.log('syncd with .butts registry')
-      cb(null, domains)
+      cb(null, zone)
     })
 }
 

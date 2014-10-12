@@ -1,14 +1,15 @@
 function getRecord(records, domain, type, cb) {
- return getRecordSingle(records, domain, type, function (err, record) {
-  if (err) { return cb(err) }
+  return getRecordSingle(records, domain, type, function (err, record) {
+    if (err) { return cb(err) }
     if (type.toLowerCase() !== 'cname' && record.type === 'cname') {
-      getRecordSingle(records, record.data[0], type, function (err, record2) {
+      return getRecordSingle(records, record.data[0], type, function (err, record2) {
         if (err) { return cb(err)}
+        // todo: support multiple RRs of same type
         return cb(err, [record, record2])
       })
-    } else {
-      return cb(err, [record])
     }
+    
+    return cb(err, [record])
  }) 
 }
 

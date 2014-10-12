@@ -2,7 +2,10 @@ require('mochi')
 
 var getRecord = require('../getRecord')
 var records = {
-  qux: {'@cname': ['foo.bar.baz.']},
+  qux: {
+    '@ns': ['foo'],
+    '@cname': ['foo.bar.baz.']
+  },
   baz: {
     bar: {
       foo: {
@@ -23,6 +26,17 @@ describe('getRecord', function () {
       done(err)
     })
   })
+
+  it('resolves a top level record', function (done) {  
+      getRecord(records, 'qux','ns', function (err, records) {
+        records.should.deep.equal([{
+          name: 'qux.',
+          type: 'ns',
+          data:['foo']
+        }])
+        done(err)
+      })
+    })
 
   it('resovles a local cname redirect', function (done) {
     getRecord(records, 'qux', 'a', function (err, records) {

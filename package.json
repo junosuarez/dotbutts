@@ -22,7 +22,9 @@
     "tar-stream": "^1.0.0",
     "request": "^2.45.0",
     "concat-stream": "^1.4.6",
-    "memoizee": "^0.3.8"
+    "memoizee": "^0.3.8",
+    "dot": "^1.0.2",
+    "dot-component": "^0.1.1"
   },
   "devDependencies": {
     "mochi": "^0.2.0"
