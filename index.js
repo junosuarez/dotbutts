@@ -44,8 +44,7 @@ function handler(req, res) {
       })
 
       if (res.answer[res.answer.length-1].type === 'CNAME'
-            && question.type !== 'CNAME'
-            && question.type !== 'SdOA') {
+            && question.type !== 'CNAME') {
         // delegate to other server
         try {
           dns.resolve(res.answer[res.answer.length-1].data, question.type, function (err, result) {
